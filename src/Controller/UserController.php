@@ -16,14 +16,14 @@ class UserController extends AbstractController
     #[Route('/users', name: 'user_list')]
     public function index(UserRepository $userRepo)
     {
-        //dd($userRepo);
         return $this->render('user/list.html.twig', 
         ['users' => $userRepo->findAll() ]);
     }
 
 
     #[Route('/users/create', name: 'user_create')]
-    public function createAction(Request $request, EntityManagerInterface $em)
+    public function createAction(Request $request, 
+    EntityManagerInterface $em)
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -31,9 +31,13 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
+            // encode the plain password
+            $user->setPassword(
+            $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
 
             $em->persist($user);
             $em->flush();

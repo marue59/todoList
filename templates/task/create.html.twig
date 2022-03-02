@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Creer une tache{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Creer un tache</h1>
+    {{ form_start(TaskType) }}
+    
+    {{ form_end(TaskType) }}
+</div>
+{% endblock %}
