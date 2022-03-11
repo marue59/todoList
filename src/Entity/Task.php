@@ -27,9 +27,10 @@ class Task
     private $content;
 
     #[ORM\Column(type: 'boolean')]
-    private $isDone;
+    private $isDone = false;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'task')]
+    #[ORM\JoinColumn(nullable: true)]
     private $user;
 
     public function getId(): ?int
@@ -73,7 +74,7 @@ class Task
         return $this;
     }
 
-    public function getIsDone(): ?bool
+    public function isDone(): ?bool
     {
         return $this->isDone;
     }

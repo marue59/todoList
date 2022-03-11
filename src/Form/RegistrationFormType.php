@@ -13,7 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -36,11 +35,11 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Rentrer un mot de passe',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Votre mot de passe doit comporter {{ limit }} caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
@@ -50,8 +49,7 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Rôle',
                 'choices' => ['utilisateur' => 'ROLE_USER', 
                               'administrateur' => 'ROLE_ADMIN'],
-            ])
-            ->add('save', SubmitType::class);
+            ]);
             
             //roles field data transformer
             $builder->get('roles')

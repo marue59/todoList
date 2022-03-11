@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\UserRepository;
+use App\Repository\TaskRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,10 +11,10 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(UserRepository $userRepo): Response
+    public function index(TaskRepository $taskRepo): Response
     {
         return $this->render('base.html.twig', 
-        ['users' => $userRepo->findAll() ]);
+        ['task' => $taskRepo->findAll()]);
     }
 
     #[Route(path: '/login', name: 'app_login')]

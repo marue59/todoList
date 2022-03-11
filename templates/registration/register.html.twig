@@ -1,14 +1,21 @@
-{% block title %}Inscription{% endblock %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un utilisateur{% endblock %}
 
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-
-    <h1></h1>
-
-    {{ form_start(RegistrationFormType) }}
-    
-    {{ form_end(RegistrationFormType) }}
-<button type="submit" class="btn">Enregistrer</button>
+    <div class="container text-center">
+        <h1>Inscription</h1>
+        {{ form_start(RegistrationFormType) }}   
+            {{ form_row(RegistrationFormType.username, { 'attr':{'class': 'form-control m-5'}}) }}
+            {{ form_row(RegistrationFormType.email, { 'attr':{'class': 'form-control m-1'}}) }}
+            {{ form_row(RegistrationFormType.plainPassword, { 'attr':{'class': 'form-control m-1'}}) }}
+            {{ form_row(RegistrationFormType.roles, { 'attr':{'class': 'form-control mt-2 mb-3'}}) }}
+       
+            {{ form_errors (RegistrationFormType) }}
+            <button class="btn btn-success" type="submit">Enregister</button>
+        {{ form_end(RegistrationFormType) }}
+    </div>
 {% endblock %}
