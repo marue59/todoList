@@ -27,8 +27,13 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AuthAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    #[Route('/users/create', name: 'app_register')]
+    #[IsGranted("ROLE_ADMIN", message:"Vous devez etre connecter en tant qu'administrateur pour consulter cette page.")]
+    public function register(Request $request, 
+    UserPasswordHasherInterface $userPasswordHasher, 
+    UserAuthenticatorInterface $userAuthenticator, 
+    AuthAuthenticator $authenticator, 
+    EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -62,9 +67,9 @@ class RegistrationController extends AbstractController
                 $request
             );
         }
-
+        $this->addFlash('success', "L'utilisateur a bien été ajouté.");
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+            'RegistrationFormType' => $form->createView(),
         ]);
     }
 

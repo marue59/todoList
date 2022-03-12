@@ -6,6 +6,8 @@ use App\Entity\Task;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class TaskType extends AbstractType
@@ -13,11 +15,9 @@ class TaskType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('createdAt')
-            ->add('title')
-            ->add('content', TextareaType::class)
-            ->add('isDone')
-        ;
+            ->add('title', TextType::class, ['label' => "Titre de la tache"])
+            ->add('content', TextareaType::class);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

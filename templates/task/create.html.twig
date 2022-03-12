@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une tache{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center">Créer une tache</h1> 
+    {{ form_start(form, { 'attr':{'class': 'm-3'}}) }}   
+        {{ form_row(form.title, { 'attr':{'class': 'form-control m-1'}}) }}
+        {{ form_row(form.content, { 'attr':{'class': 'form-control m-1'}}) }}
+        {{ form_row(form._token, { 'attr':{'class': 'form-control mt-2 mb-3'}}) }}
+    {{ form_errors (form) }}
+    <button type="submit" class="btn btn-success pull-right">Ajouter</button>
+    <a href="{{ path('task_list') }}" class="btn btn-primary">Retour à la liste des tâches</a>
+</div>
+{% endblock %}
+
