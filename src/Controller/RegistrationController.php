@@ -28,6 +28,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/users/create', name: 'app_register')]
+    #[IsGranted("ROLE_ADMIN", message:"Vous devez etre connecter en tant qu'administrateur pour consulter cette page.")]
     public function register(Request $request, 
     UserPasswordHasherInterface $userPasswordHasher, 
     UserAuthenticatorInterface $userAuthenticator, 

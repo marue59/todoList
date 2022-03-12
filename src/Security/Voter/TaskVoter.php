@@ -29,8 +29,7 @@ class TaskVoter extends Voter
         switch ($attribute) {
             case 'TASK_EDIT':
             case 'TASK_DELETE':
-                return ($user === $task->getUser()) || (in_array('ROLE_ADMIN', $user->getRoles())
-                        && null === $task->getUser());
+                return ($user === $task->getUser()) || (in_array('ROLE_ADMIN', $user->getRoles()));
             case 'TASK_TOGGLE':
                 return $user === $task->getUser() || in_array('ROLE_ADMIN', $user->getRoles());
         }
