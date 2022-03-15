@@ -23,4 +23,9 @@ class TaskTest extends WebTestCase {
         self::assertSame($this->task->getTitle(), 'Task Title');
     }
 
+    public function testContent() {
+        
+        self::assertSame($this->task->getContent(), 'Task Content');
+    }
+
 }

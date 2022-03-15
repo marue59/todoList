@@ -13,13 +13,17 @@ class TaskFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
+        $users = $manager->getRepository(User::class)->findAll();
 
         for ($i = 0; $i < 10; $i++) {
+            $user = $faker->randomElement($users);
 
             $task = new Task();
             $task->setTitle('Title'.$i);
             $task->setContent($faker->text());
             $task->setCreatedAt($faker->DateTime());
+
+            $user->addTask($task);
 
             $manager->persist($task);
         }
