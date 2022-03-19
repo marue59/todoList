@@ -7,7 +7,7 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
     <div class="container text-center">
-        <h1>Inscription</h1>
+        <h1>Créer un utilisateur</h1>
         {{ form_start(RegistrationFormType) }}   
             {{ form_row(RegistrationFormType.username, { 'attr':{'class': 'form-control m-5'}}) }}
             {{ form_row(RegistrationFormType.email, { 'attr':{'class': 'form-control m-1'}}) }}
@@ -15,7 +15,7 @@
             {{ form_row(RegistrationFormType.roles, { 'attr':{'class': 'form-control mt-2 mb-3'}}) }}
        
             {{ form_errors (RegistrationFormType) }}
-            <button class="btn btn-success" type="submit">Enregister</button>
+            <button class="btn btn-success" type="submit">Enregistrer</button>
         {{ form_end(RegistrationFormType) }}
     </div>
 {% endblock %}

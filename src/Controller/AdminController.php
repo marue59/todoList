@@ -17,7 +17,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AdminController extends AbstractController
 {
     #[Route('/users', name: 'user_list')]
-    public function index(UserRepository $userRepo)
+    public function userList(UserRepository $userRepo)
     {
         return $this->render('user/list.html.twig', 
         ['users' => $userRepo->findAll() ]);

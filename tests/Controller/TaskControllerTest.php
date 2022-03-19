@@ -4,10 +4,13 @@ namespace App\Tests\Controller;
 
 use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\Controller\LoginTrait;
 
 
 class TaskControllerTest extends WebTestCase
 {
+    use LoginTrait;
+
     private $client;
 
     private TaskRepository $taskRepository;
@@ -19,18 +22,6 @@ class TaskControllerTest extends WebTestCase
         $this->taskRepository = self::getContainer()->get(TaskRepository::class);
     }
 
-    public function logAs() {
-
-        $crawler = $this->client->request('GET', '/login');
-
-        $crawler = $this->client->submitForm('Sign in', [
-            'email' => 'test@gmail.com',
-            'password' => 'test'
-        ]);
-
-        self::assertStringContainsString('Se déconnecter', $crawler->filter('a')->text());
-    }
-
     public function testList() {
 
         $crawler = $this->client->request('GET', '/tasks');
@@ -38,17 +29,43 @@ class TaskControllerTest extends WebTestCase
         self::assertStringContainsString('Bienvenue sur Todo List', $crawler->filter('h1')->text());
     }
 
-    public function testCreate() {
+    public function testCreateIsSuccess() {
 
         $crawler = $this->client->request('GET', '/tasks/create');
         self::assertStringContainsString('Bienvenue sur Todo List', $crawler->filter('h1')->text());
 
+    }
+
+    public function testEditActionUser() 
+    {
+        $this->logAsUser();
+
+        //$task =  $this->taskRepository->findOneBy([]);
+
+        $crawler = $this->client->request('GET', '/tasks/' .  $task->getId() . '/edit');
+        $crawler = $this->client->submitForm('Modifier', [
+            "task[title]" => 'Nouveau titre',
+            "task[content]"=> 'Nouveau texte'
+        ]);
+        
+        self::assertStringContainsString('La tâche a bien été modifiée.', $crawler->filter('.alert-success')->text());
 
     }
-/*
-    public function testEdit() {
-        $this->logAs();
-
+    //isDone
+    public function testToggleTaskAction() {
+       
+        $this->logAsUser();
+        $crawler = $this->client->request('GET', '/tasks/112/toggle');
+        
+        self::assertStringContainsString("La tâche %s a bien été marquée comme faite.", "$task->getTitle()", $crawler->filter('.alert-success')->text());
     }
-*/
+
+    //delete by admin
+    public function testDeleteTaskActionByAdmin() {
+
+        $this->logAsAdmin();
+        $crawler = $this->client->request('GET', '/tasks/112/delete');
+        
+        self::assertStringContainsString('La tâche a bien été supprimée.', $crawler->filter('.btn-danger')->text());
+    }
 }
