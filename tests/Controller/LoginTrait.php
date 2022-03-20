@@ -2,6 +2,8 @@
 
 namespace App\Tests\Controller;
 
+use App\Tests\Controller\LoginTrait;
+
 trait LoginTrait
 {
     private $client;
@@ -28,7 +30,7 @@ trait LoginTrait
             'password' => 'admin'
         ]);
 
-        self::assertStringContainsString('Se déconnecter', $crawler->filter('.btn-danger')->text());
+        self::assertStringContainsString('Créer un utilisateur', $crawler->filter('.btn-primary')->text());
     }
     
 }

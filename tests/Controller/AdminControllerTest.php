@@ -2,6 +2,7 @@
 
 namespace App\Test\Controller;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Tests\Controller\LoginTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -18,7 +19,7 @@ class AdminControllerTest extends WebTestCase
     {
         parent::setUp();
         $this->client = self::createClient();
-        $this->$userRepository = self::getContainer()->get(UserRepository::class);
+        $this->userRepository = self::getContainer()->get(UserRepository::class);
     }
 
     //Verifier la creation du user
@@ -51,22 +52,22 @@ class AdminControllerTest extends WebTestCase
     // edition un user en tant qu'admin 
     public function testEditActionAdmin()
     {
-        $testAdmin = $this->$userRepository->findOneBy(['username'=>'johndoe2']);
+        $testAdmin = $this->userRepository->findOneBy(['username'=>'johndoe2']);
         $this->assertInstanceOf(User::class, $testAdmin);
         $client->loginUser($testAdmin);
 
-        $client->request('GET', '/users/{id}/edit');
+        $client->request('GET', '/users/' .  $user->getId() . '/edit');
         $this->assertResponseIsSuccessful();
     }   
 
     // edition un user en tant que user
     public function testEditActionUser()
     {
-        $testUser = $userRepository->findOneBy(['username'=>'johndoe']);
+        $testUser = $this->userRepository->findOneBy(['username'=>'johndoe']);
         $this->assertInstanceOf(User::class, $testUser);
         $client->loginUser($testUser);
 
-        $client->request('GET', '/users/{id}/edit');
+        $client->request('GET', '/users/' .  $user->getId() . '/edit');
         $this->assertResponseIsSuccessful();
 
     }
