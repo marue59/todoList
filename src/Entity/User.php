@@ -37,7 +37,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Task::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Task::class, cascade: ['persist'])]
     private $task;
 
     public function __construct()
@@ -149,8 +149,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addTask(Task $task): self
     {
-        if (!$this->Task->contains($task)) {
-            $this->Task[] = $task;
+        if (!$this->task->contains($task)) {
+            $this->task[] = $task;
             $task->setUser($this);
         }
 
@@ -159,7 +159,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeTask(Task $task): self
     {
-        if ($this->Task->removeElement($task)) {
+        if ($this->task->removeElement($task)) {
             // set the owning side to null (unless already changed)
             if ($task->getUser() === $this) {
                 $task->setUser(null);
