@@ -27,19 +27,20 @@
    ```
 
 3. Configure your environment :
-   Database : in .env
-   Create database
-   ` php bin/console doctrine:database:create `
-   Make migration
-   ` php bin/console doctrine:migrations:migrate `
-   Fixtures :
-   ` php bin/console doctrine:fixtures:load `
-   default values : Roles user and admin are automatically created and passwords are : password
 
-   Docker :
-   Create the docker network
-   ` docker network create project8 `
-   Launch the containers
-   ` docker-composer up -d `
-   Enter the PHP container
-   ` docker exec -ti [nom du container php] bash `
+   - Database : in .env
+   - Create database
+     `php bin/console doctrine:database:create`
+   - Make migration
+     `php bin/console doctrine:migrations:migrate`
+   - Fixtures :
+     `php bin/console doctrine:fixtures:load`
+   - default values : Roles user and admin are automatically created and passwords are : password
+
+   - Docker :
+   - Create the docker network
+     `docker network create project8`
+   - Launch the containers
+     `docker-composer up -d`
+   - Enter the PHP container
+     `docker exec -ti [nom du container php] bash`
