@@ -10,14 +10,16 @@ trait LoginTrait
     
     public function logAsUser() 
     {
-        $crawler = $this->client->request('GET', '/login');
+        $this->client->request('GET', '/login');
 
         $crawler = $this->client->submitForm('Connexion', [
             'email' => 'user.1@email.fr',
             'password' => 'password'
         ]);
+        
+        $crawler = $this->client->followRedirect();
 
-        self::assertStringContainsString('Se déconnecter', $crawler->filter('.btn-danger')->text());
+        self::assertStringContainsString('Se déconnecter', $crawler->filter('.btn-danger')->text());    
     }
 
 
@@ -27,10 +29,11 @@ trait LoginTrait
 
         $crawler = $this->client->submitForm('Connexion', [
             'email' => 'user.0@email.fr',
-            'password' => 'admin'
+            'password' => 'password'
         ]);
-
-        self::assertStringContainsString('Créer un utilisateur', $crawler->filter('.btn-primary')->text());
+      
+        $crawler = $this->client->followRedirect();  
+        self::assertSame('Créer un utilisateur', $crawler->filter('.btn-primary')->text());
     }
     
 }

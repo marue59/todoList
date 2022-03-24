@@ -27,7 +27,7 @@ class AdminControllerTest extends WebTestCase
     {           
         $this->logAsAdmin();
 
-        $crawler = $this->client->request('GET', '/users/create');
+        $this->client->request('GET', '/users/create');
         $crawler = $this->client->submitForm('Enregistrer', [
             'registration_form[username]' => 'username',
             'registration_form[email]' => 'username@gmail.com',
@@ -35,6 +35,8 @@ class AdminControllerTest extends WebTestCase
             'registration_form[plainPassword][second]' => 'password'
             
         ]);
+
+        
         self::assertStringContainsString("L'utilisateur a bien été ajouté.", $crawler->filter('.alert-success')->text());
     }
 
@@ -49,26 +51,23 @@ class AdminControllerTest extends WebTestCase
   
     }
 
-    // edition un user en tant qu'admin 
-    public function testEditActionAdmin()
-    {
-        $testAdmin = $this->userRepository->findOneBy(['username'=>'johndoe2']);
-        $this->assertInstanceOf(User::class, $testAdmin);
-        $client->loginUser($testAdmin);
-
-        $client->request('GET', '/users/' .  $user->getId() . '/edit');
-        $this->assertResponseIsSuccessful();
-    }   
 
     // edition un user en tant que user
     public function testEditActionUser()
     {
-        $testUser = $this->userRepository->findOneBy(['username'=>'johndoe']);
-        $this->assertInstanceOf(User::class, $testUser);
-        $client->loginUser($testUser);
+        $this->logAsAdmin();
+        $user = $this->userRepository->findOneBy(['email'=> 'user.2@email.fr']);
+       
+        $this->client->request('GET', '/admin/users/' .  $user->getId() . '/edit');
 
-        $client->request('GET', '/users/' .  $user->getId() . '/edit');
-        $this->assertResponseIsSuccessful();
+        $crawler = $this->client->submitForm('Modifier', [
+            'registration_form[username]' => 'username',
+            'registration_form[plainPassword][first]' => 'password',
+            'registration_form[plainPassword][second]' => 'password'
+        ]);
+       
+        $crawler = $this->client->followRedirect(); 
+        self::assertStringContainsString("L'utilisateur a bien été modifié", $crawler->filter('.alert-success')->text());
 
     }
 }
