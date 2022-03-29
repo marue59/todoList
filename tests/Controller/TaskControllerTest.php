@@ -3,7 +3,6 @@
 namespace App\Tests\Controller;
 
 use App\Repository\TaskRepository;
-use App\Repository\UserRepository;
 use App\Tests\Controller\LoginTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -15,7 +14,6 @@ class TaskControllerTest extends WebTestCase
     private $client;
 
     private TaskRepository $taskRepository;
-    private UserRepository $userkRepository;
 
     
     public function setUp(): void
@@ -23,7 +21,6 @@ class TaskControllerTest extends WebTestCase
         parent::setUp();
         $this->client = self::createClient();
         $this->taskRepository = self::getContainer()->get(TaskRepository::class);
-        $this->userRepository = self::getContainer()->get(UserRepository::class);
     }
 
     public function testList() {

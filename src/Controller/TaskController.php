@@ -90,7 +90,7 @@ class TaskController extends AbstractController
   
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
     #[IsGranted("TASK_DELETE", subject:"task", message:"Vous devez etre connecter en tant qu'administrateur pour consulter cette page.")]
-    public function deleteTaskAction(Task $task, EntityManagerInterface $em, Request $request)
+    public function deleteTaskAction(Task $task, EntityManagerInterface $em)
     {
         $em->remove($task);
         $em->flush();
