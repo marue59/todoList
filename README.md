@@ -79,3 +79,7 @@
 ```
     exit
 ```
+
+## Codacy :
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/95018b73e0834ef19fd0dcba88dadda5)](https://www.codacy.com/gh/marue59/todoList/dashboard?utm_source=github.com&utm_medium=referral&utm_content=marue59/todoList&utm_campaign=Badge_Grade)
