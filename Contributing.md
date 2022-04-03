@@ -11,37 +11,6 @@ Vous trouverez les informations dans le Readme.md
 
 - Configurer vos variables d'environnement :
 
-- Containers Docker en racine :
-
-```
-    cp .env.example .env
-```
-
-- URL de la base de données :
-
-```
-    cp app/html/vendor/.env app/html/vendor/.env.local app/html/vendor/.env.test
-```
-
-- Créer le reseau Docker :
-
-```
-    docker network create todoList
-```
-
-- Lancer les containers :
-
-```
- 	docker-composer up -d
-```
-
-- Entrer dans le container PHP pour lancer les commandes de la base de données :
-
-```
-docker exec -ti [nom du container php] bash
-
-```
-
 - Installer composer et ces dependances :
 
 ```
@@ -58,12 +27,6 @@ docker exec -ti [nom du container php] bash
 
 ```
     php bin/console doctrine:fixtures:load
-```
-
-- Sortir du container :
-
-```
-    exit
 ```
 
 ## Contribuer au projet :
