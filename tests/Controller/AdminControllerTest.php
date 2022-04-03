@@ -22,6 +22,24 @@ class AdminControllerTest extends WebTestCase
         $this->userRepository = self::getContainer()->get(UserRepository::class);
     }
 
+    //Verifier la creation du user
+    public function testRegister()
+    {           
+        $this->logAsAdmin();
+
+        $this->client->request('GET', '/users/create');
+        $crawler = $this->client->submitForm('Enregistrer', [
+            'registration_form[username]' => 'username',
+            'registration_form[email]' => 'username@gmail.com',
+            'registration_form[plainPassword][first]' => 'password',
+            'registration_form[plainPassword][second]' => 'password'
+            
+        ]);
+
+        
+        self::assertStringContainsString("L'utilisateur a bien été ajouté.", $crawler->filter('.alert-success')->text());
+    }
+
 
     // Voir la liste des users si connecté en admin #[Route('/users', name: 'user_list')]
     public function testUserList()
