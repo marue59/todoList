@@ -38,14 +38,14 @@ class TaskControllerTest extends WebTestCase
     }
 
     //Edition d'un tache en tant que admin
-    public function testEditActionAdmin() 
+    public function testEditAction() 
     {
         $task = $this->taskRepository->findOneBy([]);
         $this->logAsAdmin();
 
         $crawler = $this->client->request('GET', '/tasks/' .  $task->getId() . '/edit');
         
-        $crawler = $this->client->submitForm('Modifier', [
+        $this->client->submitForm('Modifier', [
             "task[title]" => 'Nouveau titre',
             "task[content]"=> 'Nouveau texte'
         ]);
@@ -59,8 +59,8 @@ class TaskControllerTest extends WebTestCase
 
         $task = $this->taskRepository->findOneBy([]);
         $this->logAsAdmin();
-        $crawler = $this->client->request('GET', '/tasks/' .  $task->getId() . '/toggle');
 
+        $this->client->request('GET', '/tasks/' .  $task->getId() . '/toggle');
         $crawler = $this->client->followRedirect(); 
         self::assertStringContainsString("Le statut a été changé", $crawler->filter('.alert-success')->text());
     }
@@ -71,7 +71,7 @@ class TaskControllerTest extends WebTestCase
         $task = $this->taskRepository->findOneBy([]);
         $this->logAsAdmin();
 
-        $crawler = $this->client->request('GET', '/tasks/' .  $task->getId() . '/delete');
+        $this->client->request('GET', '/tasks/' .  $task->getId() . '/delete');
        
         $crawler = $this->client->followRedirect(); 
         self::assertStringContainsString('La tâche a bien été supprimée.', $crawler->filter('.alert-success')->text());
