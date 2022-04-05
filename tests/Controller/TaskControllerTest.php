@@ -43,8 +43,8 @@ class TaskControllerTest extends WebTestCase
         $task = $this->taskRepository->findOneBy([]);
         $this->logAsAdmin();
 
-        $crawler = $this->client->request('GET', '/tasks/' .  $task->getId() . '/edit');
-        dd($crawler);
+        $this->client->request('GET', '/tasks/' .  $task->getId() . '/edit');
+        //dd($crawler);
         $this->client->submitForm('Modifier', [
             "task[title]" => 'Nouveau titre',
             "task[content]"=> 'Nouveau texte'
