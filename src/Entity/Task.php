@@ -33,6 +33,11 @@ class Task
     #[ORM\JoinColumn(nullable: true)]
     private $user;
 
+    public function __construct() 
+    {
+        $this->createdAt = new \DateTimeImmutable();  
+    }
+
     public function getId(): ?int
     {
         return $this->id;

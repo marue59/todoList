@@ -49,35 +49,10 @@
 
 - default values : Roles user and admin are automatically created and passwords are : password
 
-- Docker :
-- Create the docker network
-
-```
-  docker network create todoList
-```
-
-- Launch the containers
-
-```
-    docker-composer up -d
-```
-
-- Enter the PHP container
-
-```
-    docker exec -ti [nom du container php] bash
-```
-
 - Install composer and these dependencies
 
 ```
     composer install
-```
-
-- Get out of the container
-
-```
-    exit
 ```
 
 ## Codacy :

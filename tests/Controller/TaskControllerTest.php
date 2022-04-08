@@ -33,24 +33,24 @@ class TaskControllerTest extends WebTestCase
     public function testCreateIsSuccess() {
 
         $crawler = $this->client->request('GET', '/tasks/create');
+        
         self::assertStringContainsString('Bienvenue sur Todo List', $crawler->filter('h1')->text());
-
     }
 
     //Edition d'un tache en tant que admin
-    public function testEditActionAdmin() 
+    public function testEditAction() 
     {
-        $task = $this->taskRepository->findOneBy([]);
+        $task = $this->taskRepository->findOneBy([]); //dd($task);
         $this->logAsAdmin();
 
-        $crawler = $this->client->request('GET', '/tasks/' .  $task->getId() . '/edit');
-        
-        $crawler = $this->client->submitForm('Modifier', [
+        $this->client->request('GET', '/tasks/' .  $task->getId() . '/edit');
+      
+        $this->client->submitForm('Modifier', [
             "task[title]" => 'Nouveau titre',
             "task[content]"=> 'Nouveau texte'
         ]);
 
-        $crawler = $this->client->followRedirect();
+        $crawler = $this->client->followRedirect(); 
         $this->assertSelectorTextContains('.alert-success', "La tâche a bien été modifiée.");
 
     }
@@ -59,20 +59,20 @@ class TaskControllerTest extends WebTestCase
 
         $task = $this->taskRepository->findOneBy([]);
         $this->logAsAdmin();
-        $crawler = $this->client->request('GET', '/tasks/' .  $task->getId() . '/toggle');
+        $this->client->request('GET', '/tasks/' .  $task->getId() . '/toggle');
 
         $crawler = $this->client->followRedirect(); 
         self::assertStringContainsString("Le statut a été changé", $crawler->filter('.alert-success')->text());
     }
 
     //delete by admin
-    public function testDeleteTaskActionByAdmin() {
+    public function testDeleteTaskAction() {
         
         $task = $this->taskRepository->findOneBy([]);
         $this->logAsAdmin();
 
-        $crawler = $this->client->request('GET', '/tasks/' .  $task->getId() . '/delete');
-       
+        $this->client->request('GET', '/tasks/' .  $task->getId() . '/delete');
+      
         $crawler = $this->client->followRedirect(); 
         self::assertStringContainsString('La tâche a bien été supprimée.', $crawler->filter('.alert-success')->text());
     }
