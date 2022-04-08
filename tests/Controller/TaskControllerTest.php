@@ -40,17 +40,17 @@ class TaskControllerTest extends WebTestCase
     //Edition d'un tache en tant que admin
     public function testEditAction() 
     {
-        $task = $this->taskRepository->findOneBy([]);
+        $task = $this->taskRepository->findOneBy([]); //dd($task);
         $this->logAsAdmin();
 
         $this->client->request('GET', '/tasks/' .  $task->getId() . '/edit');
-        //dd($crawler);
+      
         $this->client->submitForm('Modifier', [
             "task[title]" => 'Nouveau titre',
             "task[content]"=> 'Nouveau texte'
         ]);
 
-        $crawler = $this->client->followRedirect();
+        $crawler = $this->client->followRedirect(); 
         $this->assertSelectorTextContains('.alert-success', "La tâche a bien été modifiée.");
 
     }
@@ -72,7 +72,7 @@ class TaskControllerTest extends WebTestCase
         $this->logAsAdmin();
 
         $this->client->request('GET', '/tasks/' .  $task->getId() . '/delete');
-       
+      
         $crawler = $this->client->followRedirect(); 
         self::assertStringContainsString('La tâche a bien été supprimée.', $crawler->filter('.alert-success')->text());
     }
