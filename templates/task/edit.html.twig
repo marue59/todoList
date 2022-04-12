@@ -6,6 +6,9 @@
 <div class="text-center">
     <h1>Modifier</h1>
     {{ form_start(form, {'action' : path('task_edit', { 'id' : task.id })}) }}
+    {{ form_row(form.title, { 'attr':{'class': 'form-control'} }) }} 
+    {{ form_row(form.content, { 'attr':{'class': 'form-control'} }) }} 
+
     {{ form_row(form._token, { 'attr':{'class': 'form-control mt-2 mb-3'}}) }}
 
     <button type="submit" class="btn btn-success pull-right">Modifier</button>
