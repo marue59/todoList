@@ -6,12 +6,13 @@
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-    <div class="container text-center">
+    <div class="container">
         <h1>Créer un utilisateur</h1>
         {{ form_start(RegistrationFormType) }}   
             {{ form_row(RegistrationFormType.username, { 'attr':{'class': 'form-control m-5'}}) }}
             {{ form_row(RegistrationFormType.email, { 'attr':{'class': 'form-control m-1'}}) }}
-            {{ form_row(RegistrationFormType.plainPassword, { 'attr':{'class': 'form-control m-1'}}) }}
+            {{ form_row(RegistrationFormType.plainPassword.first, { 'attr':{'class': 'form-control m-1'} }) }}      
+            {{ form_row(RegistrationFormType.plainPassword.second, { 'attr':{'class': 'form-control m-1'} }) }}
             {{ form_row(RegistrationFormType.roles, { 'attr':{'class': 'form-control mt-2 mb-3'}}) }}
        
             {{ form_errors (RegistrationFormType) }}

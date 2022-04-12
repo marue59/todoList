@@ -4,11 +4,15 @@
 {% block header_img %}{% endblock %}
 
 {% block body %}
-<div class="container text-center">
+<div class="container">
     <div class="row">
         {{ form_start(form, {'action' : path('user_edit', {'id' : user.id})}) }}
-        {{ form_row(form) }}
-
+        {{ form_row(form.username, { 'attr':{'class': 'form-control'} }) }}
+        {{ form_row(form.email, { 'attr':{'class': 'form-control'} }) }}
+        {{ form_row(form.plainPassword.first, { 'attr':{'class': 'form-control'} }) }}      
+        {{ form_row(form.plainPassword.second, { 'attr':{'class': 'form-control'} }) }}
+        {{ form_row(form.roles, { 'attr':{'class': 'form-control'} }) }}
+        
         <button type="submit" class="btn btn-success pull-right">Modifier</button>
         {{ form_end(form) }}
         <a href="{{ path('user_list') }}" class="btn btn-info pull-left">Retour à la liste des utilisateurs</a>
